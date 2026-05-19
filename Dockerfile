@@ -1,11 +1,13 @@
 FROM python:3.10-slim
 
-# تثبيت FFmpeg + تحديث SSL certificates عشان نحل مشاكل الاتصال
+# تثبيت FFmpeg + Node.js (مهم لحل تشفير YouTube) + SSL certificates
 RUN apt-get update && apt-get install -y \
     ffmpeg \
     ca-certificates \
     openssl \
     curl \
+    nodejs \
+    npm \
     && update-ca-certificates \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
