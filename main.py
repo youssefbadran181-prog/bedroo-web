@@ -99,17 +99,17 @@ async def download_media(url: str, background_tasks: BackgroundTasks, quality: s
         },
 
         # Cookies لو موجودة (مهمة لـ Instagram وFacebook الخاص)
+        # web client بس هو اللي يدعم cookies — android/ios بدونها
         'cookiefile': './cookies.txt' if os.path.exists('./cookies.txt') else None,
 
         # تجنب الحجب
         'sleep_interval': 1,
         'max_sleep_interval': 3,
 
-        # YouTube: جرب أكتر من client عشان تتجاوز الحجب
+        # YouTube: web بس مع cookies، android/ios بدون cookies
         'extractor_args': {
             'youtube': {
-                'player_client': ['web', 'android', 'ios'],
-                'skip': ['hls', 'dash'],
+                'player_client': ['web'],
             }
         },
 
