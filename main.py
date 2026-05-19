@@ -76,7 +76,7 @@ def get_ydl_opts(file_id: str, quality: str, progress_hook) -> dict:
             'User-Agent': BROWSER_UA,
             'Accept-Language': 'en-US,en;q=0.9,ar;q=0.8',
         },
-        'cookiefile': './cookies.txt' if os.path.exists('./cookies.txt') else None,
+        'username': 'oauth2',
         
         # --- التعديلات الجديدة تبدأ من هنا ---
         
