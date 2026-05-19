@@ -29,4 +29,6 @@ ENV PYTHONHTTPSVERIFY=1
 ENV REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
 ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 
+EXPOSE 7860
+
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "7860"]
