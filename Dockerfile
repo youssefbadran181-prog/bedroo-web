@@ -19,9 +19,6 @@ RUN pip install --no-cache-dir --upgrade pip \
     && pip install --no-cache-dir -r requirements.txt \
     && pip install --no-cache-dir certifi
 
-# تحديث yt-dlp لآخر نسخة دايماً عشان يتجاوز حمايات YouTube الجديدة
-RUN yt-dlp -U || true
-
 COPY . .
 
 RUN mkdir -p /tmp/downloads && chmod 777 /tmp/downloads
