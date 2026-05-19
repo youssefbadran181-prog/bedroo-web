@@ -5,3 +5,4 @@ yt-dlp-ejs
 imageio-ffmpeg
 python-multipart
 certifi
+yt-dlp-youtube-oauth2
