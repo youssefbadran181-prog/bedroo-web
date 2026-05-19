@@ -63,11 +63,15 @@ def find_downloaded_file(file_id: str) -> str | None:
     return matches[0] if matches else None
 
 def make_safe_filename(title: str, ext: str) -> str:
-    """ينظف اسم الملف من الرموز غير المسموح بيها"""
-    # بيحتفظ بالحروف العربية والإنجليزية والأرقام
-    safe = "".join([c for c in title if c.isalnum() or c in " _-()" or ord(c) > 127]).strip()
-    safe = safe[:80]  # حد أقصى 80 حرف عشان المتصفح ميتلخبطش
-    return f"{safe or 'video'}.{ext}"
+    """ينظف اسم الملف ويتعامل مع الحروف العربية والرموز الخاصة"""
+    # بيشيل كل حاجة غير إنجليزية وأرقام عشان نتجنب مشاكل الـ encoding في HTTP headers
+    safe = "".join([c for c in title if c.isascii() and (c.isalnum() or c in " _-()[]")]).strip()
+    safe = safe[:60].strip()
+    # لو الاسم فاضي (كله عربي مثلاً) نستخدم كلمة video + timestamp
+    if not safe:
+        import time
+        safe = f"video_{int(time.time())}"
+    return f"{safe}.{ext}"
 
 @app.get("/")
 async def root():
