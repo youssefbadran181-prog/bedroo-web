@@ -1,6 +1,6 @@
 fastapi
 uvicorn[standard]
-yt-dlp
+yt-dlp>=2024.04.09
 imageio-ffmpeg
 python-multipart
 certifi
