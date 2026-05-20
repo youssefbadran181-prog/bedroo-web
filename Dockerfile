@@ -19,6 +19,13 @@ RUN pip install --no-cache-dir --upgrade pip \
     && pip install --no-cache-dir -r requirements.txt \
     && pip install --no-cache-dir certifi
 
+# تحديث yt-dlp لآخر نسخة
+RUN yt-dlp -U || true
+
+# حذف oauth2 plugin عشان ميتفعلش تلقائياً
+RUN find / -name "*oauth2*" -path "*/yt_dlp/*" -delete 2>/dev/null || true \
+    && find / -name "*oauth*" -path "*/yt-dlp*" -delete 2>/dev/null || true
+
 COPY . .
 
 RUN mkdir -p /tmp/downloads && chmod 777 /tmp/downloads
