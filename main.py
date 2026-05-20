@@ -10,6 +10,7 @@ from typing import AsyncGenerator
 
 os.environ['SSL_CERT_FILE'] = certifi.where()
 os.environ['REQUESTS_CA_BUNDLE'] = certifi.where()
+os.environ['YT_DLP_NO_OAUTH2'] = '1'
 ssl._create_default_https_context = ssl.create_default_context
 
 from fastapi import FastAPI, HTTPException, BackgroundTasks
@@ -76,14 +77,13 @@ def get_ydl_opts(file_id: str, quality: str, progress_hook) -> dict:
             'User-Agent': BROWSER_UA,
             'Accept-Language': 'en-US,en;q=0.9,ar;q=0.8',
         },
-        # cookies للمواقع التانية بس — مش YouTube عشان oauth2 بيسبب مشاكل
         'cookiefile': None,
         'sleep_interval': 1,
         'max_sleep_interval': 3,
         'extractor_args': {
             'youtube': {
                 'player_client': ['web'],
-                'skip': ['oauth2'],
+                'skip': ['oauth2', 'configs', 'webpage'],
             }
         },
         'retries': 5,
