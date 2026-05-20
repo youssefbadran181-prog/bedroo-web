@@ -76,32 +76,21 @@ def get_ydl_opts(file_id: str, quality: str, progress_hook) -> dict:
             'User-Agent': BROWSER_UA,
             'Accept-Language': 'en-US,en;q=0.9,ar;q=0.8',
         },
-        'username': 'oauth2',
-        
-        # --- التعديلات الجديدة تبدأ من هنا ---
-        
-        # 1. إضافة تخطي الحظر الجغرافي
-        'geo_bypass': True,
-        'geo_bypass_country': 'US',
-        
-        # 2. تعديل الـ extractor عشان يستخدم الأندرويد بدل الويب لتجنب البلوك
-        'extractor_args': {
-            'youtube': {
-                'player_client': ['android', 'web'] 
-            }
-        },
-        
-        # --- نهاية التعديلات ---
-        
+        # cookies للمواقع التانية بس — مش YouTube عشان oauth2 بيسبب مشاكل
+        'cookiefile': None,
         'sleep_interval': 1,
         'max_sleep_interval': 3,
+        'extractor_args': {
+            'youtube': {
+                'player_client': ['web'],
+                'skip': ['oauth2'],
+            }
+        },
         'retries': 5,
         'fragment_retries': 5,
         'ignoreerrors': False,
         'progress_hooks': [progress_hook],
     }
-
-    # ... (باقي الكود زي ما هو بدون تغيير) ...
 
     if quality == "audio":
         opts['format'] = 'bestaudio/best'
