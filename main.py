@@ -19,6 +19,24 @@ from fastapi.responses import FileResponse, StreamingResponse
 import yt_dlp
 import imageio_ffmpeg
 
+# ============================================================
+# إزالة oauth2 plugin من yt-dlp نهائياً وقت التشغيل
+# ============================================================
+try:
+    import yt_dlp.extractor
+    extractors = yt_dlp.extractor._ALL_CLASSES if hasattr(yt_dlp.extractor, '_ALL_CLASSES') else []
+    yt_dlp.extractor._ALL_CLASSES = [e for e in extractors if 'oauth' not in e.__name__.lower()]
+except:
+    pass
+
+try:
+    import sys
+    to_remove = [k for k in sys.modules if 'oauth' in k.lower() and 'yt' in k.lower()]
+    for k in to_remove:
+        del sys.modules[k]
+except:
+    pass
+
 app = FastAPI(title="Bedroo Downloader API", version="3.0")
 
 app.add_middleware(
