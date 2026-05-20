@@ -26,6 +26,13 @@ RUN yt-dlp -U || true
 RUN find / -name "*oauth2*" -path "*/yt_dlp/*" -delete 2>/dev/null || true \
     && find / -name "*oauth*" -path "*/yt-dlp*" -delete 2>/dev/null || true
 
+# حذف أي yt-dlp plugins folder فيه oauth
+RUN rm -rf /root/.config/yt-dlp/plugins/ 2>/dev/null || true \
+    && rm -rf /home/*/.config/yt-dlp/plugins/ 2>/dev/null || true \
+    && rm -rf /app/.config/yt-dlp/plugins/ 2>/dev/null || true \
+    && find / -name "*.py" -path "*yt*dlp*plugin*oauth*" -delete 2>/dev/null || true \
+    && find / -name "ytdlp_plugins" -type d -exec rm -rf {} + 2>/dev/null || true
+
 COPY . .
 
 RUN mkdir -p /tmp/downloads && chmod 777 /tmp/downloads
